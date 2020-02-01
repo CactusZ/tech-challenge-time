@@ -11,7 +11,7 @@
 - Run `yarn` or `npm install` to install node_modules
 - If you want online mode, run mongo database (`mongod`)
 - Create `config.ts` (there is `config.example.ts` which can be renamed)
-- `yarn build-start` to build & start or `yarn start` to start with precompiled files
+- `yarn build-start` to build & start
 - Open `localhost:3000` in browser
 
 # Description
