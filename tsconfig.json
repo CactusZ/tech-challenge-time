@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "target": "ES5",
+        "outDir": "compiled",
+        "sourceMap": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true
+    },
+    "exclude": ["frontend", "config.example.ts", "node_modules"],
+    "paths": {
+        "@/*": ["./*"]
+    }
+}

@@ -1,0 +1,22 @@
+<template>
+    <div id="app">
+        <router-view />
+    </div>
+</template>
+
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+
+@Component({
+    components: {},
+})
+export default class App extends Vue {
+}
+</script>
+
+<style lang="less">
+#app {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+}
+</style>

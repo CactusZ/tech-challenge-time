@@ -1,0 +1,44 @@
+{
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/eslint-recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:vue/recommended"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parser": "vue-eslint-parser",    
+    "parserOptions": {
+        "parser": "@typescript-eslint/parser",
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "plugins": [
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "indent": [
+            "error",
+            4
+        ],
+        "vue/html-indent": ["error", 4],
+        "vue/script-indent": ["error", 4],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "@typescript-eslint/interface-name-prefix": ["error", { "prefixWithI": "always" }],
+        "@typescript-eslint/no-use-before-define": ["error", { "functions": false, "classes": true }],
+        "@typescript-eslint/explicit-function-return-type": 0
+    }
+}
