@@ -56,7 +56,7 @@
 import { Component, Vue } from "vue-property-decorator";
 import { loginRequest } from "../api-requests/auth";
 import { IUserCredentials } from "../../../schemas/user";
-import { offlineLogIn } from "../utils/authentication";
+import { offlineLogIn, logOut } from "../utils/authentication";
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import VueRouter from "vue-router";
 import { Notification, Form } from "element-ui";
@@ -98,6 +98,11 @@ export default class Login extends Vue {
         }]
     };
     isValid = false;
+
+    created() {
+        logOut();
+    }
+    
     openLoginForm() {
         this.showForm = true;
         this.isSignupAction = false;
