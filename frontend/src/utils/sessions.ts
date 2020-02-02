@@ -42,6 +42,7 @@ export function fetchLocalSessions(filter: ISessionFilter, pagination: IPaginati
 
 export function clearLocalSessions() {
     localStorage.removeItem("sessions");
+    clearCurrentSessionStartLocal();
 }
 
 export function addLocalSession(sessionData: ISessionData) {
@@ -57,4 +58,17 @@ export function addLocalSession(sessionData: ISessionData) {
     currentSessions.push(session);
     localStorage.setItem("sessions", JSON.stringify(currentSessions));
     return true;
+}
+
+export function storeCurrentSessionStartLocal(time: number) {
+    localStorage.setItem("currentSessionStart", time.toString(10));
+}
+
+export function getCurrentSessionStartLocal(): number {
+    const startStr = localStorage.getItem("currentSessionStart");
+    return startStr ? Number(startStr) || 0 : 0;
+}
+
+export function clearCurrentSessionStartLocal() {
+    localStorage.removeItem("currentSessionStart");
 }

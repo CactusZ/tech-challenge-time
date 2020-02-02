@@ -2,7 +2,7 @@
     <div class="current-session">
         <h3>Current session</h3>
         <el-button
-            :disabled="!!currentSession"
+            :disabled="!!currentSessionStart"
             type="primary"
             @click="startSession()"
         >
@@ -41,11 +41,21 @@ import { differenceBetweenMoments } from "../utils/utils";
 import { ISessionData } from "../../../schemas/session";
 import { createSession } from "../api-requests/sessions";
 import { isOfflineLoggedIn } from "../utils/authentication";
-import { addLocalSession } from "../utils/sessions";
+import { addLocalSession, getCurrentSessionStartLocal, clearCurrentSessionStartLocal, storeCurrentSessionStartLocal } from "../utils/sessions";
 @Component({
     components: {}
 })
 export default class CurrentSession extends Vue {
+
+    created() {
+        const alreadyCreatedStart = getCurrentSessionStartLocal();
+        if (alreadyCreatedStart) {
+            this.currentSessionStart = alreadyCreatedStart;
+            this.currentSessionEnd = Date.now();
+            this.startCurrentSessionTimer();
+        }
+    }
+
     get currentSessionTimeFormatted() {
         const start = moment(this.currentSessionStart);
         const end = moment(this.currentSessionEnd);
@@ -59,6 +69,7 @@ export default class CurrentSession extends Vue {
         if (this.currentSession) {
             window.clearInterval(this.currentSession);
             this.currentSession = 0;
+            clearCurrentSessionStartLocal();
         }
     }
 
@@ -66,6 +77,7 @@ export default class CurrentSession extends Vue {
         this.currentSessionEnd = moment.utc().valueOf();
         window.clearInterval(this.currentSession);
         this.currentSession = 0;
+        clearCurrentSessionStartLocal();
     }
 
     destroyed() {
@@ -75,9 +87,14 @@ export default class CurrentSession extends Vue {
     startSession() {
         this.currentSessionStart = moment.utc().valueOf();
         this.currentSessionEnd = moment.utc().valueOf();
-        this.currentSession = window.setInterval(() => {
-            this.currentSessionEnd = moment.utc().valueOf();
-        }, 1000);
+        this.startCurrentSessionTimer();
+        storeCurrentSessionStartLocal(this.currentSessionStart);
+    }
+
+    private startCurrentSessionTimer() {
+        this.currentSession=window.setInterval(() => {
+            this.currentSessionEnd=moment.utc().valueOf();
+        },1000);
     }
 
     async saveSession() {

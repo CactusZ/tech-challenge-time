@@ -74,7 +74,7 @@ var collections_1 = require("./backend/collections");
                 app.use(function (req, res) {
                     utils_1.sendError(res);
                 });
-                app.listen(3000, function () {
+                app.listen(3000, "192.168.0.49", function () {
                     console.log("Example app listening on port 3000!");
                 });
                 return [2 /*return*/];
