@@ -17,7 +17,6 @@ import {
 
 (async () => {
     const dbPromiseFactory = await connectToDatabase();
-    await ensureIndexes(dbPromiseFactory);
 
     const usersService = new UsersService(dbPromiseFactory);
     const sessionsService = new SessionsService(dbPromiseFactory);
@@ -27,7 +26,7 @@ import {
     app.use(bodyParser.json());
     app.use(cookieParser());
     app.use(express.static(path.join(__dirname, "dist")));
-    
+
     app.get("/", function(req, res) {
         res.sendFile(path.join(__dirname, "dist", "index.html"));
     });
@@ -60,6 +59,7 @@ async function connectToDatabase() {
         await client.connect();
         dbPromiseFactory = () =>
             Promise.resolve(client.db(config.databaseName));
+        await ensureIndexes(dbPromiseFactory);
     } catch (e) {
         dbPromiseFactory = () => Promise.reject("Database not available!");
     }

@@ -56,9 +56,6 @@ var collections_1 = require("./backend/collections");
             case 0: return [4 /*yield*/, connectToDatabase()];
             case 1:
                 dbPromiseFactory = _a.sent();
-                return [4 /*yield*/, ensureIndexes(dbPromiseFactory)];
-            case 2:
-                _a.sent();
                 usersService = new users_service_1.default(dbPromiseFactory);
                 sessionsService = new sessions_service_1.default(dbPromiseFactory);
                 app = express();
@@ -90,7 +87,7 @@ function connectToDatabase() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 2, , 3]);
+                    _a.trys.push([0, 3, , 4]);
                     client_1 = new mongodb_1.MongoClient(config_1.config.mongoUrl, {
                         useUnifiedTopology: true
                     });
@@ -100,12 +97,15 @@ function connectToDatabase() {
                     dbPromiseFactory = function () {
                         return Promise.resolve(client_1.db(config_1.config.databaseName));
                     };
-                    return [3 /*break*/, 3];
+                    return [4 /*yield*/, ensureIndexes(dbPromiseFactory)];
                 case 2:
+                    _a.sent();
+                    return [3 /*break*/, 4];
+                case 3:
                     e_1 = _a.sent();
                     dbPromiseFactory = function () { return Promise.reject("Database not available!"); };
-                    return [3 /*break*/, 3];
-                case 3: return [2 /*return*/, dbPromiseFactory];
+                    return [3 /*break*/, 4];
+                case 4: return [2 /*return*/, dbPromiseFactory];
             }
         });
     });
