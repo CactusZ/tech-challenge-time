@@ -3,14 +3,23 @@
         <current-session @created="sessionCreated" />
         <div class="session-list">
             <div class="filters">
-                <el-button @click="filterToday">
+                <el-button
+                    :type="selectedFilter === 'today' ? 'success' : ''"
+                    @click="filterToday"
+                >
                     Today
                 </el-button>
-                <el-button @click="filterWeek">
-                    Last 7 days
+                <el-button
+                    :type="selectedFilter === 'week' ? 'success' : ''"
+                    @click="filterWeek"
+                >
+                    This week
                 </el-button>
-                <el-button @click="filterMonth">
-                    Last 30 days
+                <el-button
+                    :type="selectedFilter === 'month' ? 'success' : ''"
+                    @click="filterMonth"
+                >
+                    This month
                 </el-button>
             </div>
             <el-pagination
@@ -101,6 +110,7 @@ export default class Home extends Vue {
         sortOrder: -1
     };
     totalCount = 0;
+    selectedFilter = null;
 
     async created() {
         await this.fetchSessions();
@@ -147,33 +157,53 @@ export default class Home extends Vue {
             .format("YYYY/MM/DD hh:mm:ss");
     }
 
+    resetFilter() {
+        this.selectedFilter = null;
+        this.filter = null;
+    }
+
     async filterToday() {
-        this.filter = {
-            start: moment()
-                .utc()
-                .subtract(1, "day")
-                .valueOf()
-        };
+        if (this.selectedFilter === "today") {
+            this.resetFilter();
+        } else {
+            this.selectedFilter = "today";
+            this.filter = {
+                start: moment()
+                    .startOf("day")
+                    .utc()
+                    .valueOf()
+            };
+        }
         this.fetchSessions();
     }
 
     async filterWeek() {
-        this.filter = {
-            start: moment()
-                .utc()
-                .subtract(1, "week")
-                .valueOf()
-        };
+        if (this.selectedFilter === "week") {
+            this.resetFilter();
+        } else {
+            this.selectedFilter = "week";
+            this.filter = {
+                start: moment()
+                    .startOf("week")
+                    .utc()
+                    .valueOf()
+            };
+        }
         this.fetchSessions();
     }
 
     async filterMonth() {
-        this.filter = {
-            start: moment()
-                .utc()
-                .subtract(1, "month")
-                .valueOf()
-        };
+        if (this.selectedFilter === "month") {
+            this.resetFilter();
+        } else {
+            this.selectedFilter = "month";
+            this.filter = {
+                start: moment()
+                    .startOf("month")
+                    .utc()
+                    .valueOf()
+            };
+        }
         this.fetchSessions();
     }
 }
