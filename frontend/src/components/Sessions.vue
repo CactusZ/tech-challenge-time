@@ -14,8 +14,8 @@
                 </el-button>
             </div>
             <el-pagination
-                layout="total, prev, pager, next"
-                :page-count="totalCount / pagination.pageSize"
+                layout="prev, pager, next"
+                :total="totalCount"
                 :size="pagination.pageSize"
                 hide-on-single-page
                 @current-change="pageChanged"
