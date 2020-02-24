@@ -3,6 +3,7 @@ import * as jwt from "jsonwebtoken";
 import {Response} from "express";
 import { ITokenPayload } from "../schemas/user";
 import { IRequestResult } from "../schemas/request";
+import { config } from "../config";
 
 export function isWriteOpSuccessful(insertResult: InsertOneWriteOpResult<null>): boolean {
     return (
@@ -14,7 +15,7 @@ export function isWriteOpSuccessful(insertResult: InsertOneWriteOpResult<null>):
 
 export function generateToken(payload: ITokenPayload): Promise<string> {
     return new Promise((resolve, reject) => {
-        jwt.sign(payload, "secretString", (err, token) => {
+        jwt.sign(payload, config.secret, (err, token) => {
             if (!err) {
                 resolve(token);
             } else {
@@ -26,7 +27,7 @@ export function generateToken(payload: ITokenPayload): Promise<string> {
 
 export function decodeToken(token: string): Promise<ITokenPayload> {
     return new Promise((resolve) => {
-        jwt.verify(token, "secretString", (err, payload) => {
+        jwt.verify(token, config.secret, (err, payload) => {
             if (!err) {
                 resolve(payload as ITokenPayload);
             } else {
