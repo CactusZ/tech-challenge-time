@@ -83,6 +83,9 @@ import { logOut, isOfflineLoggedIn } from "../utils/authentication";
 import { differenceBetweenMoments } from "../utils/utils";
 import CurrentSession from "./CurrentSession.vue";
 import { fetchLocalSessions } from "../utils/sessions";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import vueRouter from "vue-router/types/index";
+
 @Component({
     components: {
         CurrentSession
